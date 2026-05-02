@@ -27,12 +27,12 @@ knowledge.insert(path='data/raw/', skip_if_exists=True)
 
 analyst_agent = Agent(
     name="Data Analysis Agent",
-    model=Nvidia(id="qwen/qwen3.5-122b-a10b"),
-    tools=[csv_tools],
+    model=Nvidia(id="z-ai/glm4.7"),
+    tools=[csv_tools],  
     instructions=[
         "You are a data analysis agent.",
         "You have access to tools to analyze the data.",
-        "Use the tools to analyze the data.",
+        "Limit your analysis to a maximum of 3 queries. Do not get stuck in a loop.",
         "Always answer the user's questions based on the analysis.",
         "Generate a report and use the tools to send it to the user by using the Gmail tool."
     ],
@@ -61,7 +61,7 @@ data_analysis_team = Team(
     instructions=[
         "You are a central agent that can coordinate between different agents.",
         "You have access to tools to analyze the data.",
-        "Use the tools to analyze the data.",
+        "Limit your analysis to a maximum of 3 queries.",
         "Always answer the user's questions based on the analysis.",
         "Generate a report and use the tools to send it to the user by using the Gmail tool.",
         f"Always send an email to {os.getenv('EMAIL_ADDRESS')} with the report."
