@@ -14,6 +14,7 @@ Este projeto é um agente inteligente de análise de dados. Ele analisa datasets
 
 - Python 3
 - [Agno](https://github.com/agno-ai/agno) (Agentes AI)
+- API Nvidia NIM (Provedor de Modelos LLM)
 - ChromaDB (Banco Vetorial)
 - Gmail API
 - [uv](https://github.com/astral-sh/uv) (Gerenciador de pacotes)
