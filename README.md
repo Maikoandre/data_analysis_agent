@@ -6,7 +6,8 @@ Este projeto é um agente inteligente de análise de dados. Ele analisa datasets
 
 - **Análise Autônoma de Dados:** Processa arquivos CSV com limites restritos (agregações como COUNT, AVG, etc).
 - **RAG e Vetorização:** Integração com ChromaDB e `SentenceTransformer` para conhecimento de contexto.
-- **Integração com Gmail:** Gera um relatório e dispara automaticamente para o seu email.
+- **Geração de PDF:** Cria automaticamente um relatório em PDF usando a biblioteca `reportlab`.
+- **Integração com Gmail:** Gera um relatório em PDF e dispara automaticamente como anexo para o seu email.
 - **Prevenção de Loops:** Regras rígidas para evitar processamento excessivo de dados e travamentos nas chamadas de ferramentas.
 
 ## 🛠️ Tecnologias
