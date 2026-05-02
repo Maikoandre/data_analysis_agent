@@ -7,6 +7,7 @@ from agno.tools.csv_toolkit import CsvTools
 from agno.tools.google.gmail import GmailTools
 from dotenv import load_dotenv
 import os
+from app.pdf_generator import generate_pdf_report
 
 load_dotenv()
 
@@ -29,6 +30,7 @@ data_analysis_agent = Agent(
     model=Nvidia(id="z-ai/glm4.7"),
     tools=[
         csv_tools,
+        generate_pdf_report,
         GmailTools(credentials_path='credentials/credentials.json', port=8080)
     ],  
     instructions=[
@@ -38,7 +40,8 @@ data_analysis_agent = Agent(
         "Prefer using aggregations (COUNT, AVG, SUM, GROUP BY) to analyze the dataset instead of pulling raw rows.",
         "Limit your analysis to a maximum of 3 queries.",
         "After gathering insights, create a concise report.",
-        f"Immediately email the report to {os.getenv('EMAIL_ADDRESS')} using the `send_email` tool.",
+        "First, use the `generate_pdf_report` tool to create a PDF of the report. It will return the file path.",
+        f"Then, immediately email the report to {os.getenv('EMAIL_ADDRESS')} using the `send_email` tool, passing the generated PDF file path as an attachment.",
         "CRITICAL: You MUST actually call the `send_email` tool. Do not just output text saying that you sent it.",
         "CRITICAL: Call ONLY ONE tool at a time. Do NOT make multiple tool calls in a single response.",
         "Do not overthink or overcomplicate the report."
