@@ -4,9 +4,8 @@ from agno.knowledge import Knowledge
 from agno.knowledge.embedder.sentence_transformer import SentenceTransformerEmbedder
 from agno.vectordb.chroma import ChromaDb, SearchType
 from agno.tools.csv_toolkit import CsvTools
-from agno.tools.gmail import GmailTools
+from agno.tools.google.gmail import GmailTools
 from agno.team.team import Team
-from app.model.find_email_output import FindEmailOutput
 from dotenv import load_dotenv
 import os
 
@@ -44,7 +43,7 @@ analyst_agent = Agent(
 gmail_agent = Agent(
     name="Gmail Agent",
     model=Nvidia(id="qwen/qwen3.5-122b-a10b"),
-    tools=[GmailTools(credentials_path='credentials/credentials.json')],
+    tools=[GmailTools(credentials_path='credentials/credentials.json', port=8080)],
     description="You are an expert Gmail Agent that can read, draft, send and label emails using Gmail.",
     instructions=[
         "Based on user query, you can read, draft, send and label emails using Gmail.",
@@ -53,7 +52,6 @@ gmail_agent = Agent(
         "Attachments can be added to the email",
         "When you need to modify an email, make sure to find its message_id and thread_id in order to do modification operations.",
     ],
-    output_schema=FindEmailOutput,
 )
 
 data_analysis_team = Team(
