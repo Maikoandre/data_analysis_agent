@@ -12,7 +12,7 @@ from app.agent import data_analysis_agent
 
 def main():
     data_analysis_agent.print_response(
-        "Analyze the amazon dataset and send me a report via email.",
+        "Analyze the amazon dataset, create a dashboard and send me the dashboard and a report via email.",
         stream=True
     )
 

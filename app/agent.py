@@ -8,6 +8,7 @@ from agno.tools.google.gmail import GmailTools
 from dotenv import load_dotenv
 import os
 from app.pdf_generator import generate_pdf_report
+from agno.tools.python import PythonTools
 
 load_dotenv()
 
@@ -25,27 +26,20 @@ knowledge = Knowledge(
 
 knowledge.insert(path='data/raw/', skip_if_exists=True)
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+instructions_path = os.path.join(current_dir, "instructions.md")
+
 data_analysis_agent = Agent(
-    name="Data Analysis & Email Agent",
+    name="Data Analyst",
+    description="Advanced data analytics agent that generates charts and provides actionable insights.",
     model=Nvidia(id="z-ai/glm4.7"),
     tools=[
         csv_tools,
         generate_pdf_report,
-        GmailTools(credentials_path='credentials/credentials.json', port=8080)
+        GmailTools(credentials_path='credentials/credentials.json', port=8080),
+        PythonTools()
     ],  
-    instructions=[
-        "You are an expert Data Analyst.",
-        "You must analyze the data using the provided tools.",
-        "CRITICAL: NEVER use `SELECT *` without a `LIMIT` clause (e.g. `LIMIT 5`). Doing so will break the system due to large data.",
-        "Prefer using aggregations (COUNT, AVG, SUM, GROUP BY) to analyze the dataset instead of pulling raw rows.",
-        "Limit your analysis to a maximum of 3 queries.",
-        "After gathering insights, create a concise report.",
-        "First, use the `generate_pdf_report` tool to create a PDF of the report. It will return the file path.",
-        f"Then, immediately email the report to {os.getenv('EMAIL_ADDRESS')} using the `send_email` tool, passing the generated PDF file path as an attachment.",
-        "CRITICAL: You MUST actually call the `send_email` tool. Do not just output text saying that you sent it.",
-        "CRITICAL: Call ONLY ONE tool at a time. Do NOT make multiple tool calls in a single response.",
-        "Do not overthink or overcomplicate the report."
-    ],
+    instructions=instructions_path,
     search_knowledge=True,
     knowledge=knowledge,
     debug_mode=True,
