@@ -17,7 +17,7 @@ csv_tools = CsvTools(csvs=['data/raw/amazon.csv'])
 knowledge = Knowledge(
     vector_db=ChromaDb(
         collection="data",
-        path="data/chromadb",
+        path="db/chromadb",
         persistent_client=True,
         search_type=SearchType.hybrid,
         embedder=SentenceTransformerEmbedder(id="sentence-transformers/all-MiniLM-L6-v2")

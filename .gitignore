@@ -12,5 +12,6 @@ wheels/
 
 credentials/
 data/
+db/
 
 token.json
